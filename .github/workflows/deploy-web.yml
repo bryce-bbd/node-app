@@ -32,6 +32,9 @@ jobs:
     #   run: |
     #       cd web
     #       sudo docker build -f Dockerfile -t frontend-image .
+    - name: Package artifact
+      run: zip -r ./web.zip *
+      working-directory: web
 
     - name: Upload artifact to S3
       run: |

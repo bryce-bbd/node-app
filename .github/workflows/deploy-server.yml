@@ -36,11 +36,14 @@ jobs:
     #   run: |
     #       cd server
     #       sudo docker build -f Dockerfile -t backend-image .
+    - name: Package artifact
+      run: zip -r ./server.zip *
+      working-directory: server
 
     - name: Upload artifact to S3
       run: |
         cd server
-        aws s3 cp site.zip s3://${{ secrets.BUCKET_NAME }}/backend/application-${{ github.run_id }}.zip
+        aws s3 cp server.zip s3://${{ secrets.BUCKET_NAME }}/backend/application-${{ github.run_id }}.zip
 
   deploy:
     needs: build
