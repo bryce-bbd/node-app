@@ -28,14 +28,15 @@ jobs:
         role-session-name: deploy-frontend-session
         aws-region: ${{secrets.AWS_REGION}}
 
-    - name: Build docker image
-      run: |
-          cd web
-          sudo docker build -f Dockerfile -t frontend-image .
+    # - name: Build docker image
+    #   run: |
+    #       cd web
+    #       sudo docker build -f Dockerfile -t frontend-image .
 
     - name: Upload artifact to S3
-      run: aws s3 cp site.zip s3://${{ secrets.BUCKET_NAME }}/frontend/application-${{ github.run_id }}.zip
-      working-directory: /project/web
+      run: |
+        cd web
+        aws s3 cp site.zip s3://${{ secrets.BUCKET_NAME }}/frontend/application-${{ github.run_id }}.zip
 
 
   deploy:
