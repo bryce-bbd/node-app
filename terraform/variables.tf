@@ -6,6 +6,16 @@ variable "mandatory_tags" {
   }
 }
 
+variable "account_number" {
+  type        = string
+  description = "The account number for the AWS account."
+}
+
+variable "repo" {
+  type        = string
+  description = "The repository name."
+}
+
 variable "region" {
   type        = string
   description = "The region where the resources will be deployed."

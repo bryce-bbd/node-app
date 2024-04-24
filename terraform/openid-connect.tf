@@ -18,7 +18,7 @@ resource "aws_iam_role" "github_action_role" {
       {
         "Effect" : "Allow",
         "Principal" : {
-          "Federated" : "arn:aws:iam::434468814231:oidc-provider/token.actions.githubusercontent.com"
+          "Federated" : "arn:aws:iam::${var.account_number}:oidc-provider/token.actions.githubusercontent.com"
         },
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
@@ -26,7 +26,7 @@ resource "aws_iam_role" "github_action_role" {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           },
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : "repo:Release-Monkey/release-monkey:*"
+            "token.actions.githubusercontent.com:sub" : "repo:${var.repo}:*"
           }
         }
       }

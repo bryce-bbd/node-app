@@ -17,11 +17,7 @@ env.properties
 
 *.state
 
-*tfvars
-
 *.vs
-
-*.tfvars
 
 # Local .terraform directories
 **/.terraform/*

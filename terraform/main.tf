@@ -58,46 +58,46 @@ resource "aws_route_table_association" "route_table_association" {
 }
 
 #Check this
-resource "aws_db_subnet_group" "db-subnet_group" {
+resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${var.project_name}-subnet-group"
   subnet_ids = aws_subnet.public_subnets[*].id
   tags       = merge(var.mandatory_tags, { Name = "${var.project_name}-public-subnet-group" })
 }
 
-resource "aws_db_instance" "db" {
-  identifier                  = "${var.project_name}-db"
-  allocated_storage           = 20
-  engine                      = "sqlserver-ex"
-  engine_version              = "16.00.4095.4.v1"
-  instance_class              = "db.t3.micro"
-  publicly_accessible         = true
-  username                    = "admin"
-  multi_az                    = false # Free tier supports only single AZ
-  manage_master_user_password = true  #Fetch password from console
-  apply_immediately           = true
-  copy_tags_to_snapshot       = true
-  db_subnet_group_name        = aws_db_subnet_group.db-subnet_group.name
-  skip_final_snapshot         = true
+# resource "aws_db_instance" "db" {
+#   identifier                  = "${var.project_name}-db"
+#   allocated_storage           = 20
+#   engine                      = "sqlserver-ex"
+#   engine_version              = "16.00.4095.4.v1"
+#   instance_class              = "db.t3.micro"
+#   publicly_accessible         = true
+#   username                    = "admin"
+#   multi_az                    = false # Free tier supports only single AZ
+#   manage_master_user_password = true  #Fetch password from console
+#   apply_immediately           = true
+#   copy_tags_to_snapshot       = true
+#   db_subnet_group_name        = aws_db_subnet_group.db_subnet_group.name
+#   skip_final_snapshot         = true
 
-  vpc_security_group_ids = [
-    aws_security_group.db_security_group.id
-  ]
-  tags = merge(var.mandatory_tags, { Name = "${var.project_name}-db" })
-}
+#   vpc_security_group_ids = [
+#     aws_security_group.db_security_group.id
+#   ]
+#   tags = merge(var.mandatory_tags, { Name = "${var.project_name}-db" })
+# }
 
 resource "aws_key_pair" "eb_key_pair" {
   key_name   = "${var.project_name}-key-pair"
   public_key = var.eb_public_key
 }
 
-resource "aws_elastic_beanstalk_application" "server-app" {
+resource "aws_elastic_beanstalk_application" "server_app" {
   name        = "${var.project_name}-server-app"
   description = "Beanstalk application"
 }
 
-resource "aws_elastic_beanstalk_environment" "server-env" {
+resource "aws_elastic_beanstalk_environment" "server_env" {
   name                = "${var.project_name}-server-env"
-  application         = aws_elastic_beanstalk_application.server-app.name
+  application         = aws_elastic_beanstalk_application.server_app.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.3.0 running Docker"
   cname_prefix        = var.project_name
 
@@ -159,14 +159,14 @@ resource "aws_elastic_beanstalk_environment" "server-env" {
   # depends_on = [aws_db_instance.sql_server, aws_s3_bucket.source]
 }
 
-resource "aws_elastic_beanstalk_application" "web-app" {
+resource "aws_elastic_beanstalk_application" "web_app" {
   name        = "${var.project_name}-web-app"
   description = "Beanstalk application"
 }
 
-resource "aws_elastic_beanstalk_environment" "web-env" {
+resource "aws_elastic_beanstalk_environment" "web_env" {
   name                = "${var.project_name}-web-env"
-  application         = aws_elastic_beanstalk_application.web-app.name
+  application         = aws_elastic_beanstalk_application.web_app.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.3.0 running Docker"
   cname_prefix        = "${var.project_name}-web"
 
