@@ -5,7 +5,7 @@ var express = require('express');
 
 // Creating an Express app
 var app = express();
-const port = process.env.DB_PORT; // Port number
+const port = process.env.PORT; // Port number
 console.log(port);
 
 // Define a route

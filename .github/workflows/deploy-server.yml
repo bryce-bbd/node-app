@@ -36,6 +36,12 @@ jobs:
     #   run: |
     #       cd server
     #       sudo docker build -f Dockerfile -t backend-image .
+
+    - name: Generate .env
+      run: |
+          cd server
+          echo "PORT=3000" > .env
+
     - name: Package artifact
       run: zip -r ./server.zip *
       working-directory: server
