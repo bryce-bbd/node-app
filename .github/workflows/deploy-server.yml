@@ -39,7 +39,7 @@ jobs:
 
     - name: Upload artifact to S3
       run: aws s3 cp site.zip s3://${{ secrets.BUCKET_NAME }}/backend/application-${{ github.run_id }}.zip
-      working-directory: project/server
+      working-directory: /project/server
 
   deploy:
     needs: build
