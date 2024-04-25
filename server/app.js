@@ -5,7 +5,7 @@ var express = require('express');
 
 // Creating an Express app
 var app = express();
-const port = process.env.PORT; // Port number
+const port = process.env.PORT || process.env.PORT_LOCAL || 3000; // Port number
 console.log(port);
 
 // Define a route

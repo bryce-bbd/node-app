@@ -40,7 +40,12 @@ jobs:
     - name: Generate .env
       run: |
           cd server
-          echo "PORT=3000" > .env
+          echo "PORT_LOCAL=3000" > .env
+
+    - name: List files
+      run: |
+          cd server
+          ls -a
 
     - name: Package artifact
       run: zip -r ./server.zip *
