@@ -10,5 +10,4 @@ router.get('/welcome', function (req, res, next) {
   res.render('welcome', { message: 'Welcome to My Website' });
 });
 
-
 module.exports = router;

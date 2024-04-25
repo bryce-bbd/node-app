@@ -28,10 +28,17 @@ jobs:
         role-session-name: deploy-frontend-session
         aws-region: ${{secrets.AWS_REGION}}
 
-    # - name: Build docker image
-    #   run: |
-    #       cd web
-    #       sudo docker build -f Dockerfile -t frontend-image .
+    - name: Generate .env
+      run: |
+          cd web
+          echo "PORT_LOCAL=80" > .env
+
+    - name: List files
+      run: |
+          cd web
+          ls -a
+          cat .env
+
     - name: Package artifact
       run: zip -r ./web.zip *
       working-directory: web
@@ -40,7 +47,6 @@ jobs:
       run: |
         cd web
         aws s3 cp web.zip s3://${{ secrets.BUCKET_NAME }}/frontend/application-${{ github.run_id }}.zip
-
 
   deploy:
     needs: build

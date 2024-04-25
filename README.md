@@ -28,7 +28,6 @@ npm install
 npm run web
 ```
 
-
 ## Access the database using MS SQL Server studio
 - Open ms sql sever studio
 - Set server type to database engine

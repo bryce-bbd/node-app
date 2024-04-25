@@ -28,19 +28,11 @@ jobs:
         role-session-name: deploy-backend-session
         aws-region: ${{secrets.AWS_REGION}}
 
-    - name: Update Release with .env
-      run: |
-          cd server
-
-    # - name: Build docker image
-    #   run: |
-    #       cd server
-    #       sudo docker build -f Dockerfile -t backend-image .
-
     - name: Generate .env
       run: |
           cd server
           echo "PORT_LOCAL=3000" > .env
+          cat .env
 
     - name: List files
       run: |
